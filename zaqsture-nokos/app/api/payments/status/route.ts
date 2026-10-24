@@ -1,0 +1,3 @@
+import { NextResponse } from "next/server";
+import { averpay } from "@/lib/providers";
+export async function GET(req:Request){try{const id=new URL(req.url).searchParams.get("invoice_id");if(!id)return NextResponse.json({error:"invoice_id wajib diisi."},{status:400});return NextResponse.json(await averpay("invoice/status",{invoice_id:id}));}catch(e:any){return NextResponse.json({error:e.message},{status:502});}}

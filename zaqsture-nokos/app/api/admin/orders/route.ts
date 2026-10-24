@@ -1,0 +1,2 @@
+import {NextResponse} from "next/server";import {isAdmin} from "@/lib/auth";import {db} from "@/lib/db";
+export async function GET(){if(!await isAdmin())return NextResponse.json({error:"Tidak diizinkan."},{status:401});const {data,error}=await db().from("orders").select("*").order("created_at",{ascending:false}).limit(500);if(error)return NextResponse.json({error:error.message},{status:500});return NextResponse.json({orders:data});}
